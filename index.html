@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>El joc d'en Rafael Masó</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://apis.google.com/js/api.js"></script>
+
+</head>
+<body>
+    <div class="gameContainer">
+
+        <div class="infoContainer">
+
+            <div id="casillaInfo" >
+                <br><br>
+                <p><b>El Joc de Rafael Masó </b>ha estat creat amb la col·laboració del Col·legi d'Arquitectes de Catalunya, El Col·legi de l'Arquitectura Tècnica de Girona i La Fundació Rafael Masó que han cedit amablement les fotografies utilitzades. </p>
+                <p>El joc ha estat ideat, programat i desenvolupat per <b>Ferran Canals</b>, arquitecte tècnic.</p>
+                <p>Els textos han estat redactats per <b>Laia Molera</b>, arquitecta i revisats per la Fundació Rafael Masó.</p> 
+                <p>Els drets de les imatges han estat cedits específicament per a la creació d'aquest joc, permetent-nos oferir una experiència enriquidora i visualment atractiva als participats.</p>
+                <img src="assets/images/infoMaso.jpg" alt="Fotografia de Rafael Masó">
+                
+            </div>
+        </div>
+
+        <div class="boardContainer">
+            <div id="gameBoard">
+                <div class="corner-decor top-left"><div class="cross"></div></div>
+                <div class="corner-decor top-right"><div class="cross"></div></div>
+                <div class="corner-decor bottom-left"><div class="cross"></div></div>
+                <div class="corner-decor bottom-right"><div class="cross"></div></div>
+                <!-- Les caselles i les fitxes s'afegeixen dinàmicament -->
+            </div>
+            
+        </div>
+
+        <div class="columna-derecha">
+            <div class="scoreButtonInfoContainer">
+                <div id="title">
+                    
+                </div>
+                <table id="scoreBoard">
+                <thead>
+                    <tr>
+                        <th>Equip</th>
+                        <th>Puntuació</th>
+                    </tr>
+                </thead>
+                <tbody id="scoreBoardBody">
+                    <!-- Els equips i les seves puntuacions s'afegeixen dinàmicament -->
+                </tbody>
+            </table>
+            </div>
+            <div id="dadoContainer">
+                <button id="rollDice">Comença l'equip Forja</button>
+                <script>
+                    document.getElementById('rollDice').addEventListener('click', function() {
+                        this.disabled = true; // Deshabilita el botón inmediatamente
+            
+                        setTimeout(() => {
+                            this.disabled = false; // Rehabilita el botón después de 3 segundos
+                        }, 3000);
+            
+                        // Simulación de lanzamiento de dados
+                        console.log("Dado lanzado, esperando 3 segundos para el próximo lanzamiento...");
+                    });
+                </script>
+                <audio id="audioPlayer"></audio>
+                <audio id="audioPlayerDice" class="dau" src="assets/sounds/dice.mp3"></audio>
+                <audio id="moveSound" src="assets/sounds/lliscar.mp3" preload="auto"></audio>
+                <audio id="final" src="assets/sounds/final.mp3" preload="auto"></audio>
+                
+                <div id="resultadoDado"> <span id="numeroDado">-</span></div>
+            </div>
+            <div class="infoContainer1">
+                <div id="gameInfo">
+                    Comença la partida l'equip <strong>Forja.</strong>
+                </div>
+
+            </div>
+            
+        </div>
+
+    </div><!-- Final de gameContanier -->
+    
+    
+    <script type="module" src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Llama a la función de lectura de texto automáticamente después de 5 segundos
+            setTimeout(() => {
+                hablarTextoInicial();
+            }, 4000); // Retraso de 5000 milisegundos (5 segundos)
+    
+            function hablarTextoInicial() {
+                var descripciones = document.getElementsByClassName('descripcion-casilla');
+                if (descripciones.length > 0) { // Verifica que hay al menos un elemento
+                    console.log("leyendo descripción");
+                    var texto = descripciones[0].textContent; // Usa el primer elemento de la colección
+                    hablarTexto(texto);
+                } else {
+                    console.log("No se encontraron elementos con la clase 'descripcion-casilla'");
+                }
+            }
+    
+            function hablarTexto(texto) {
+                texto = limpiarHTML(texto);
+                const apiKey = 'AIzaSyDyTzb70U1sD8Ijbca1qcFg8MqsQZJ_twA'; // Reemplaza 'TU_API_KEY' con tu clave API real.
+                const url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`;
+                const data = {
+                    input: {
+                        ssml: `<speak>${limpiarHTML(texto)}</speak>` // Utiliza SSML para mayor control del habla
+                    },
+                    voice: {
+                        languageCode: 'ca-ES',
+                        ssmlGender: 'NEUTRAL',
+                        name: 'ca-ES-Standard-A' // Especifica una voz concreta si es necesario
+                    },
+                    audioConfig: {
+                        audioEncoding: 'MP3', // El formato de audio deseado
+                        effectsProfileId: ['small-bluetooth-speaker-class-device'], // Ajustes específicos del dispositivo de reproducción
+                        pitch: -1, // Ajusta el tono del habla (puede variar entre -20.0 a 20.0)
+                        speakingRate: 1 // Ajusta la velocidad del habla (puede variar entre 0.25 y 4.0)
+                    }
+                };
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const audioContent = data.audioContent;
+                    const audioPlayer = document.getElementById('audioPlayer');
+                    audioPlayer.src = `data:audio/mp3;base64,${audioContent}`;
+                    audioPlayer.play();
+                })
+                .catch(error => console.error('Error al llamar a la API de Text-to-Speech:', error));
+            }
+    
+            function limpiarHTML(texto) {
+                return texto.replace(/<\/?[^>]+(>|$)/g, "");
+            }
+    
+            // Evento click del botón aún necesario para otros clics después del primero
+            document.getElementById('rollDice').addEventListener('click', function() {
+                var audioPlayer = document.getElementById('audioPlayer');
+                if (audioPlayer && !audioPlayer.paused) {
+                    audioPlayer.pause(); // Detiene cualquier audio en reproducción
+                    audioPlayer.currentTime = 0; // Opcionalmente resetea el tiempo del audio
+                }
+                // Espera 5 segundos antes de leer la descripción actualizada
+                setTimeout(() => {
+                    var descripciones = document.getElementsByClassName('descripcion-casilla');
+                    if (descripciones.length > 0) {
+                        console.log("Leyendo descripción después del retraso");
+                        var texto = descripciones[0].textContent; // Usa el primer elemento de la colección
+                        hablarTexto(texto);
+                    } else {
+                        console.log("No se encontraron elementos con la clase 'descripcion-casilla' después del retraso");
+                    }
+                }, 4000); // Espera 5 segundos para asegurar que el DOM se haya actualizado
+            });
+        });
+
+        function cerrarModal() {
+            document.getElementById('modalGanador').style.display = 'none';
+            location.reload(); // Això recarregarà la pàgina, efectivament reiniciant el joc
+        }
+    </script>
+
+<!-- Modal guanyador -->  
+<!-- Modal para el Ganador -->
+<div id="modalGanador" style="display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+    <div style="background: white; margin: 100px auto; padding: 20px; width: 50%;">
+        <h2 id="textoGanador"></h2>
+        <button onclick="cerrarModal()">Reinicia el joc</button>
+    </div>
+</div>  
+
+<div id="warningMessage">
+    <p>Per una millor experiència, sisplau utilitza una pantalla de com a mínim 14".</p><br>
+    <p>Utilitza l'scroll del navegador per ajustar el contingut fins que desaparegui aquest missatge.</p>
+</div>
+    
+    
+</body>
+</html>
+
+
+
+

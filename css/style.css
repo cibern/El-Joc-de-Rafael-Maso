@@ -1,0 +1,494 @@
+/* style.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden; /* Previene el scroll lateral en todo el documento */
+    background-image: url('../assets/images/fondo1.jpg'); /* Ruta a tu imagen */
+    background-position: center; /* Centra la imagen en la página */
+    background-size: cover; /* Asegura que la imagen cubra toda la página */
+    background-attachment: fixed; /* La imagen de fondo no se mueve al hacer scroll */
+    
+}
+#title{
+    font-family: 'Pacifico', cursive;
+    font-size: 2em;
+    text-align: center;
+    color: #000000;
+}
+
+.gameContainer {
+    display: grid;
+    grid-template-columns: 30% 50% 20%;
+    height: calc(100vh - 40px); /* Ajusta la altura para considerar el margen */
+    margin: 00px;
+    box-sizing: border-box;
+}
+
+#casillaInfo {
+    max-height: 780px;
+    width: 110%;
+    max-width: 400px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f0f0f0;
+    padding: 50px;
+    padding-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s; /* Espera a que la opacidad cambie antes de cambiar la visibilidad */
+    animation: fadeIn 0.3s ease-out 1s forwards; /* Start animation after 0.5s */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+
+#casillaInfo h2 {
+    font-size: 24px; /* Tamaño de fuente para el título */
+    color: #007bff; /* Color del título */
+    margin-bottom: 0px; /* Espacio después del título */
+}
+#casillaInfo h3 {
+    
+    margin-bottom: 0px; /* Espacio después del título */
+}
+
+#casillaInfo p {
+    font-size: 16px; /* Tamaño de fuente para la descripción */
+    line-height: 1.5; /* Espaciado de línea para mejor lectura */
+    text-align: justify; /* Justificar el texto */
+}
+
+#casillaInfo img {
+    width: 400px; /* Ajustar la imagen al ancho del contenedor */
+    border-radius: 4px; /* Bordes redondeados para la imagen */
+    margin-top: 15px; /* Espacio antes de la imagen */
+}
+
+.gameSquare {
+    position: absolute;
+    width: 76px; /* Ajusta menos que el paso para tener espacio entre casillas */
+    height: 76px; /* Ajusta menos que el paso para tener espacio entre casillas */
+    border: 1px solid #000; /* Borde de las casillas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 50px; /* Tamaño del texto ajustable según la preferencia */
+    background-color: #f0f0f0; /* Fondo de las casillas para mejor visibilidad */
+    border-radius: 15px; /* Bordes redondeados */
+    color: white; /* Fondo de las casillas para mejor visibilidad */
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+/* Estils per a les caselles rodones */
+.roundSquare {
+    width: 55px; /* Amplada específica per a les caselles rodones */
+    height: 55px; /* Altura específica per a les caselles rodones */
+    border-radius: 50%; /* Fa les caselles completament rodones */
+    border: 10px dashed black; /* Contorn més gruixut, negre i discontínua */
+}
+/* Colors del contorn segons el material */
+.roundSquare.forja {
+    border-color: #ff4757;
+}
+
+.roundSquare.vitrall {
+    border-color: #1e90ff;
+}
+
+.roundSquare.ceramica {
+    border-color: #2ed573;
+}
+
+.roundSquare.pedra {
+    border-color: #ffa502;
+}
+
+#gameBoard {
+    box-shadow:
+    
+    0 0 0 2em rgb(240, 201, 150),
+    0 0 0 2.5em rgb(234, 159, 61);
+    
+    width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    position: relative;
+    z-index: 1; /* Opcional, asegura que el tablero tenga un z-index definido */
+    background-color: rgb(226, 204, 176);
+    border-radius: 5px;
+
+    position: relative;
+    
+}
+
+
+.infoContainer, .columna-derecha , .infoContainer1{
+    display: flex;
+    justify-content: flex-start;
+    padding-right: 20px; /* Añade un espacio adicional a la derecha */
+    text-align: left;
+}
+
+.columna-derecha {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Asegúrate de que ocupe toda la altura disponible */
+}
+
+.boardContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+
+}
+
+
+.scoreButtonInfoContainer #gameInfo {
+    flex: 40%; /* Ajusta para que cada fila ocupe el 40% */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+#gameInfo{
+    margin-top: 1px;
+    width: 200%; /* Ajusta el ancho al 100% del contenedor padre */
+    font-family: 'Arial', sans-serif;
+    color: #333; /* Color de texto oscuro para mejor lectura */
+    background-color: #f0f0f0; /* Fondo claro */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 400px; /* Ancho máximo del contenedor */
+    
+    transition: all 0.3s ease; /* Transición suave para cambios */
+    max-height: inherit;
+}
+.scoreButtonInfoContainer {
+    width: 100%; /* Utiliza todo el ancho disponible */
+    order: -1; /* Esto asegura que siempre esté en la parte superior */
+    padding: 10px 0; /* Añade algo de espacio vertical sin afectar el ancho */
+}
+
+.dadoContainer {
+    margin-bottom: 1px;
+    flex: 20%; /* El botón ocupa el 20% de la columna */
+    cursor: pointer;
+}
+
+/* Estilos adicionales para diferenciar las áreas */
+.infoContainer { background-color: rgba(0, 0, 0, 0.2); }
+.boardContainer { background-color: rgba(0, 0, 0, 0.2); }
+.columna-derecha { background-color: rgba(0, 0, 0, 0.2); }
+.dadoContainer { background-color: rgba(0, 0, 0, 0.2); border: none; padding: 10px 20px; }
+
+
+/* Fiches de joc */
+.ficha {
+    width: 50px; /* Tamaño de la ficha */
+    height: 50px; /* Tamaño de la ficha */
+    border-radius: 50%; /* Hace la ficha circular */
+    border: 2px solid white; /* Borde sólido para definir claramente la ficha */
+    position: absolute; /* Posicionamiento relativo a su casilla padre */
+    z-index: 20; /* Mayor que el z-index del tablero */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px; /* Tamaño de texto dentro de la ficha, si es necesario */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Hace el texto más grueso */
+    text-shadow: 1px 1px 2px #000; /* Sombra para el texto */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.3), 0 16px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 2s ease-in-out; /* Duración de 2 segundos con un efecto suave */
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    background-color: transparent; /* Fondo transparente inicialmente */
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8), transparent 70%), /* Iluminación superior izquierda */
+        radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.4), transparent 70%); /* Sombreado inferior derecho */
+    background-origin: border-box;
+    background-clip: padding-box; /* Aplica el gradiente solo dentro del contenido, no al borde */
+}
+
+/* Clases para posicionar las fichas en cada cuadrante */
+.ficha.top-left { top: -5%; left: -5%; }
+.ficha.top-right { top: -5%; right: -5%; }
+.ficha.bottom-left { bottom: -5%; left: -5%; }
+.ficha.bottom-right { bottom: -5%; right: -5%; }
+
+/* Colores específicos para cada equipo */
+.ficha.equipo1 { background-color: #ff4757; } /* Rojo más brillante */
+.ficha.equipo2 { background-color: #1e90ff; } /* Azul más brillante */
+.ficha.equipo3 { background-color: #2ed573; } /* Verde más brillante */
+.ficha.equipo4 { background-color: #ffa502; } /* Amarillo más brillante */
+
+/* Efecto al pasar el mouse por encima */
+.ficha:hover {
+    transform: scale(1.1); /* Hace la ficha un poco más grande */
+    cursor: pointer; /* Cambia el cursor a una mano para indicar que es interactivo */
+}
+
+/* Taula de puntuació */
+#scoreBoard {
+    margin-top: 15px; /* Mantiene el margen superior */
+    margin-right: 20px; /* Añade un margen a la derecha */
+    margin-bottom: 0; /* Mantiene el margen inferior */
+    margin-left: auto; /* Centra hacia la izquierda */
+    width: 100%;
+    max-width: 400px; /* Limita el ancho máximo */
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+#scoreBoard table {
+    width: 100%; /* Aprovecha todo el ancho de #scoreBoard */
+    border-collapse: collapse; /* Elimina el espacio entre bordes de celdas */
+}
+
+#scoreBoard th, #scoreBoard td {
+    padding: 12px 15px; /* Establece un espaciado uniforme para contenido de la tabla */
+    text-align: left; /* Alineación del texto a la izquierda para coherencia con casillaInfo */
+    font-size: 16px; /* Ajusta el tamaño del texto para coherencia */
+    color: #333; /* Texto oscuro para mejor lectura */
+}
+
+#scoreBoard th {
+    background-color: #007bff; /* Color de fondo azul para los encabezados, similar al título en casillaInfo */
+    color: white; /* Texto blanco para contraste */
+    font-size: 24px; /* Más grande para destacar, similar al h2 en casillaInfo */
+}
+
+#scoreBoard td {
+    border-bottom: 1px solid #dddddd; /* Borde inferior para separar filas */
+    font-family: 'Pacifico', cursive;
+    font-size: 30px;
+    text-align: center;
+    padding: 0px;
+    
+}
+#scoreBoard .puntuacion-grande {
+    font-size: 50px;  
+    font-weight: bold;
+    padding: 0px;  
+    
+}
+#scoreBoard tr:hover {
+    background-color: #f5f5f5; /* Fondo al pasar el ratón, para interactividad */
+}
+
+#scoreBoard tr:last-child td {
+    border-bottom: none; /* Elimina el borde inferior de la última fila para limpieza */
+}
+
+
+/*Dau*/
+#dadoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* Espacio entre el botón y el resultado */
+    padding: 0px;
+}
+#rollDice {
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    align-self: center;
+    font-size: 24px;
+    font-family: 'Pacifico', cursive;
+    background-color: #ff4757;
+    color: white; /* Cambiado a blanco para mejor contraste */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra para efecto 3D */
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; /* Añadir transform a la transición */
+}
+
+#rollDice:hover {
+    background-color: #ff6f91; /* Un tono más claro de rojo cuando se pasa el ratón */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más grande para efecto elevado */
+}
+
+#rollDice:active {
+    background-color: #e63946; /* Un tono más oscuro de rojo para efecto de pulsación */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra más pequeña para efecto de presión */
+    transform: translateY(2px); /* Ligeramente hacia abajo para simular un botón presionado */
+}
+
+@media (max-width: 600px) {
+    #rollDice {
+        font-size: 18px; /* Más pequeño para dispositivos pequeños */
+        padding: 8px 16px; /* Padding más pequeño para mantener proporciones */
+    }
+}
+#numeroDado {
+    font-family: 'Pacifico', cursive;
+    font-size: 120px; /* Hace el número del dado grande */
+    color: #007BFF; /* Color del número del dado */
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: black;
+}
+.team {
+    font-size: 24px; 
+    font-weight: 400; 
+    color: #333;
+}
+#centerDiv{
+    border-radius: 20px;  
+    font-family: 'Pacifico', cursive;
+    font-size: 2em;
+    text-align: center;
+    color: #000000;
+    z-index: 1;
+    border: 2px dotted black; /* Contorn més gruixut, negre i discontínua */
+}
+
+.ficha-en-centro {
+    z-index: 15; /* Asegura que la ficha esté por encima del div central */
+}
+
+/*Format finestra emergent*/
+#ventanaEmergente {
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+    text-align: justify; 
+}
+#normasJuego {
+    font-family: 'Pacifico', cursive;
+    font-size: 36px;
+    line-height: 1.6;
+    text-align: justify; 
+}
+
+/* Decoració*/
+
+.corner-decor {
+    position: absolute;
+    width: 30px; /* Diámetro del círculo */
+    height: 30px; /* Diámetro del círculo */
+    background-color: brown;
+    border-radius: 50%; /* Hace el círculo perfectamente redondo */
+}
+
+.top-left {
+    top: -30px;
+    left: -30px;
+}
+
+.top-right {
+    top: -30px;
+    right: -30px;
+}
+
+.bottom-left {
+    bottom: -30px;
+    left: -30px;
+}
+
+.bottom-right {
+    bottom: -30px;
+    right: -30px;
+}
+
+#boardContainer::before, #boardContainer::after {
+    content: '';
+    position: absolute;
+    background-color: black; /* Color de la cruz */
+}
+
+#boardContainer::before {
+    width: 10px; /* Grosor de la línea vertical de la cruz */
+    height: 60px; /* Altura para que coincida con el diámetro del círculo */
+    top: -30px;
+    left: 50%; /* Centrar la línea vertical */
+    transform: translateX(-50%); /* Ajuste fino para centrar exactamente la línea vertical */
+}
+
+#boardContainer::after {
+    width: 60px; /* Ancho para que coincida con el diámetro del círculo */
+    height: 10px; /* Grosor de la línea horizontal de la cruz */
+    top: 50%;
+    left: -30px;
+    transform: translateY(-50%); /* Ajuste fino para centrar exactamente la línea horizontal */
+}
+
+.cross {
+    width: 60px; /* Ajusta según el tamaño de tu imagen */
+    height: 60px; /* Ajusta según el tamaño de tu imagen */
+    background-image: url('../assets/images/creu.png'); /* Asegúrate de usar la ruta correcta */
+    background-size: cover; /* Esto asegura que la imagen cubra todo el div */
+    background-position: center; /* Centra la imagen en el div */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#centerDiv{
+    background-image: url('../assets/images/center.jpg'); /* Ruta a la teva imatge */
+    margin: 0 auto;
+    background-position: 60% center; /* Desplaça la imatge cap a la dreta */
+    background-size: cover; /* Escala la imatge per cobrir tot el div */
+    background-repeat: no-repeat; /* Evita que la imatge es repeteixi */
+    background-position: 80% center; /* Desplaça la imatge cap a la dreta */
+    
+}
+
+/* Estilo por defecto (oculto) */
+#warningMessage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none; /* Inicia oculto, se mostrará según el tamaño de pantalla */
+    background-color: rgba(255, 204, 0, 0.9);
+    color: black;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid red;
+    z-index: 1000;
+}
+
+/* Media query para pantallas más grandes que 1910px */
+@media (min-width: 1911px) {
+    #warningMessage {
+        display: none; /* Asegura que el mensaje esté oculto en pantallas grandes */
+    }
+
+    #gameContainer {
+        display: flex; /* Asegura que el juego se muestre en pantallas grandes */
+    }
+}
+
+/* Media query para pantallas menores o iguales a 1910px */
+@media (max-width: 1910px) {
+    #warningMessage {
+        display: flex; /* Usa flex para mantener el contenido centrado */
+    }
+
+    #gameContainer {
+        display: none; /* Oculta el juego en pantallas pequeñas */
+    }
+}
